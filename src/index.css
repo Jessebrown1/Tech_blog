@@ -1,0 +1,41 @@
+/* ===========================
+   GLOBAL LAYOUT FIXES
+   =========================== */
+
+/* Remove ANY unexpected page overflow */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;     /* 🔥 Hides horizontal scroll overflow */
+    background: #f8fafc;    /* or your preferred bg */
+  }
+  
+  /* Prevent components from creating sideways scroll */
+  * {
+    box-sizing: border-box;
+  }
+  
+  /* Some components (like Trending row) may overflow.
+     Ensure all wrappers respect page width. */
+  .container, section, nav, header, footer {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* ===========================
+     SCROLLBAR HIDE (GLOBAL)
+     =========================== */
+  
+  /* For Chrome, Edge, Safari */
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+  
+  /* For Firefox */
+  html {
+    scrollbar-width: none;
+  }
+  

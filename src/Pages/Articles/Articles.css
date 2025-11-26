@@ -1,0 +1,198 @@
+/* Articles.css — premium, responsive article grid for a tech blog */
+
+/* Theme / tokens */
+:root{
+  --page-max: 1200px;
+  --gutter: 20px;
+  --bg: #ffffff;
+  --muted: #6b7280;
+  --text: #0b1220;
+  --accent: #0366d6;
+  --card-radius: 14px;
+  --card-border: rgba(10,14,20,0.06);
+  --card-shadow: 0 18px 48px rgba(6,12,24,0.07);
+  --glass: rgba(255,255,255,0.7);
+  --transition: 180ms cubic-bezier(.2,.9,.23,1);
+}
+
+/* Section wrapper */
+.articles {
+  padding: 36px 0;
+  border-top: 1px solid rgba(0,0,0,0.04);
+  background: transparent;
+}
+
+/* Keep content aligned with your global container */
+.articles.container {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  box-sizing: border-box;
+}
+
+/* Head row */
+.articles-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:30px;
+}
+.articles-head h3 {
+  margin: 6px;
+  align-items:center;
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:-0.2px;
+  color:var(--text);
+}
+.see-all {
+  font-size:14px;
+  color:var(--accent);
+  text-decoration:none;
+  font-weight:700;
+  padding:6px 10px;
+  border-radius:8px;
+  transition: background var(--transition), color var(--transition);
+}
+.see-all:hover { background: rgba(3,102,214,0.06); color: darken(var(--accent),10%); } /* fallback: browsers ignore darken() */
+
+/* Grid: responsive columns
+   layout intent:
+   - mobile: 1 column
+   - small tablets: 2 columns
+   - desktop: 3 columns
+   - wide desktop: 4 columns
+*/
+.articles-grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(1, 1fr);
+  align-items: start;
+}
+
+/* Article card (expected markup from ArticleCard component)
+   Use .article-card as the top-level card element inside the grid.
+*/
+.article-card {
+  background: linear-gradient(180deg, #ffffff, #fbfcfd);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+/* Hover / focus lift */
+.article-card:hover,
+.article-card:focus-within {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 80px rgba(6,12,24,0.12);
+}
+
+/* Thumbnail image block — full width */
+.article-thumb {
+  width: 100%;
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+/* Card content */
+.article-body {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 auto;
+}
+
+/* meta row: category, author, date */
+.article-meta {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  font-size:12px;
+  color:var(--muted);
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.6px;
+}
+.article-author { color:var(--muted); font-weight:600; text-transform:none; letter-spacing:0; }
+
+/* title & excerpt */
+.article-title {
+  margin:0;
+  font-size:18px;
+  line-height:1.25;
+  color:var(--text);
+  font-weight:900;
+}
+.article-excerpt {
+  margin:0;
+  color:#425066;
+  font-size:14px;
+  line-height:1.5;
+  flex: 1 1 auto;
+}
+
+/* footer with CTA */
+.article-footer {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:8px;
+}
+.read-more {
+  color:var(--accent);
+  font-weight:800;
+  text-decoration:none;
+  font-size:14px;
+}
+
+/* subtle divider between articles sections (optional) */
+.articles + .articles { border-top: 1px solid rgba(0,0,0,0.03); }
+
+/* Responsive breakpoints */
+@media (min-width: 600px) {
+  .articles-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .article-thumb { height: 170px; }
+  .articles-head h3 { font-size: 22px; }
+}
+
+@media (min-width: 980px) {
+  .articles-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .article-thumb { height: 200px; }
+  .article-title { font-size:20px; }
+}
+
+@media (min-width: 1400px) {
+  .articles-grid { grid-template-columns: repeat(4, 1fr); gap: 28px; }
+  .article-thumb { height: 220px; }
+  .article-title { font-size:20px; }
+}
+
+/* Mobile optimisations */
+@media (max-width: 420px) {
+  .articles { padding: 20px 8px; }
+  .articles-head { margin-bottom: 12px; gap:10px; }
+  .articles-head h3 { font-size:18px; }
+  .article-thumb { height:140px; }
+  .article-body { padding: 10px 12px; }
+  .article-excerpt { font-size:13px; color:#4b5563; }
+}
+
+/* Accessibility & performance */
+.article-card:focus-within { outline: 3px solid rgba(0,176,255,0.12); outline-offset:4px; border-radius:12px; }
+@media (prefers-reduced-motion: reduce) {
+  .article-card, .article-card:hover { transition: none; transform: none; }
+}
+
+/* Small utilities */
+.u-center { text-align:center; }
+.kicker { display:inline-block; padding:6px 10px; border-radius:999px; background: rgba(3,102,214,0.06); color:var(--accent); font-weight:800; font-size:12px; letter-spacing:0.6px; }

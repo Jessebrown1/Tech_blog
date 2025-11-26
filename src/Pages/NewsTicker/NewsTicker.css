@@ -1,0 +1,52 @@
+/* NewsTicker.css - simple, accessible ticker */
+.news-ticker{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:8px 12px;
+    border-bottom:1px solid rgba(0,0,0,0.04);
+    background: linear-gradient(180deg,#f8fafc,#ffffff);
+    font-weight:600;
+    font-size:14px;
+  }
+  
+  .ticker-left { color:#ef4444; min-width:86px; }
+  .ticker-toggle{
+    margin-left:auto;
+    background:transparent;
+    border:1px solid rgba(0,0,0,0.06);
+    padding:6px 10px;
+    border-radius:8px;
+    cursor:pointer;
+  }
+  
+  /* scrolling strip */
+  .ticker-strip{
+    overflow:hidden;
+    flex:1 1 auto;
+    min-width:0;
+  }
+  
+  .ticker-inner{
+    display:flex;
+    gap:28px;
+    white-space:nowrap;
+    align-items:center;
+    padding-right:30px;
+  }
+  
+  .ticker-item{
+    color:#0b1220;
+    text-decoration:none;
+    opacity:0.95;
+    padding:4px 0;
+    display:inline-block;
+  }
+  .ticker-item:hover{ text-decoration:underline; color:#0366d6; }
+  
+  /* Responsive */
+  @media (max-width:720px){
+    .news-ticker{ font-size:13px; padding:8px; gap:8px; }
+    .ticker-left{ min-width:64px; }
+  }
+  
