@@ -1,5 +1,5 @@
 import React from "react";
-import "./home.css";
+
 
 /**
  * HeroAnimated: compact hero with animated tech lines + glow.
