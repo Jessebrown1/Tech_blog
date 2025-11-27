@@ -1,9 +1,4 @@
-/* Trending.css — Modern premium horizontal scroller (always horizontal)
-   - Horizontal scroll on all viewports
-   - Chevrons inside container (do NOT increase page width)
-   - No page overflow, clean padding, hidden native scrollbar
-   - Accessible focus + reduced-motion support
-*/
+/* Trending.css — upgraded: fades + hover auto-scroll + polished UI */
 
 /* Theme tokens */
 :root{
@@ -16,30 +11,20 @@
   --chev-color: #0366d6;
   --gap: 16px;
   --radius: 14px;
-  --container-pad: 20px; /* outer padding so chevrons don't cause overflow */
+  --container-pad: 20px;
+  --fade-width: 84px; /* width of left/right fade */
 }
 
-/* Dark theme support */
-[data-theme='dark']{
-  --bg: #061219;
-  --muted: #9aa5b1;
-  --text: #e6f6ff;
-  --card-border: rgba(255,255,255,0.04);
-  --card-shadow: 0 16px 48px rgba(0,0,0,0.45);
-  --chev-bg: linear-gradient(180deg,#07121a,#0b2230);
-  --chev-color: #7ad1ff;
-}
-
-/* Root container: keep overflow hidden to avoid page shift */
+/* Container */
 .trending{
   position: relative;
   background: var(--bg);
   padding: 18px var(--container-pad);
   border-bottom: 1px solid rgba(0,0,0,0.04);
-  overflow: hidden; /* prevents horizontal overflow from scroller/chevrons */
+  overflow: hidden;
 }
 
-/* Header row */
+/* Head row */
 .trending-head{
   display:flex;
   align-items:center;
@@ -56,18 +41,50 @@
   color:var(--text);
 }
 
-/* Chevrons: absolutely positioned *inside* the trending container */
+/* Fade overlays (left + right) */
+.trending .fade-left,
+.trending .fade-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--fade-width);
+  pointer-events: none;
+  z-index: 40;
+  transition: opacity .28s ease;
+  opacity: 0; /* shown only when scrollable */
+}
+
+/* left = gradient from left -> transparent */
+.trending .fade-left {
+  left: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0));
+}
+
+/* right = gradient from transparent -> right */
+.trending .fade-right {
+  right: 0;
+  background: linear-gradient(270deg, rgba(255,255,255,1), rgba(255,255,255,0));
+}
+
+/* Dark theme adjustments: fade uses dark background */
+[data-theme='dark'] .trending .fade-left,
+[data-theme='dark'] .trending .fade-right {
+  background: linear-gradient(90deg, rgba(6,10,16,0.96), rgba(6,10,16,0));
+}
+[data-theme='dark'] .trending .fade-right {
+  background: linear-gradient(270deg, rgba(6,10,16,0.96), rgba(6,10,16,0));
+}
+
+/* Chevrons (left + right) */
 .trend-chev {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 50;
-
+  z-index: 60;
   width:48px;
   height:48px;
   border-radius:12px;
   border: none;
-
   background: var(--chev-bg);
   color: var(--chev-color);
   font-size:22px;
@@ -75,25 +92,21 @@
   align-items:center;
   justify-content:center;
   cursor: pointer;
-
   box-shadow: 0 8px 28px rgba(6,12,24,0.08);
-  transition: transform .14s ease, box-shadow .14s ease, opacity .12s ease;
-  opacity: 0.98;
+  transition: transform .12s ease, opacity .18s ease, box-shadow .12s ease;
+  opacity: 0; /* invisible by default; JS toggles based on scrollability */
+  pointer-events: auto;
 }
 
-/* Position left/right with inward offset so they don't create extra width */
-.trend-chev.left { left: calc(var(--container-pad) + 6px); }
-.trend-chev.right { right: calc(var(--container-pad) + 6px); }
+.trend-chev.left { left: calc(var(--container-pad) + 10px); }
+.trend-chev.right { right: calc(var(--container-pad) + 10px); }
 
-.trend-chev:hover { transform: translateY(-50%) scale(1.06); box-shadow: 0 12px 34px rgba(6,12,24,0.12); }
-.trend-chev:disabled { opacity:0.28; cursor:default; box-shadow:none; }
+/* visible state of chevrons (CSS class 'visible' applied by JS) */
+.trend-chev.visible { opacity: 1; transform: translateY(-50%) scale(1); }
+.trend-chev:hover { transform: translateY(-50%) scale(1.06); box-shadow: 0 12px 36px rgba(6,12,24,0.12); }
+.trend-chev:disabled { opacity: .22; cursor: default; box-shadow: none; }
 
-/* Make chevrons more discoverable on small screens */
-@media (max-width:520px){
-  .trend-chev { width:44px; height:44px; font-size:20px; left:12px; right:12px; }
-}
-
-/* Row: ALWAYS horizontal scroll; padding-left/right leaves room for chevrons */
+/* Row: horizontal scroller */
 .trending-row{
   display:flex;
   gap:var(--gap);
@@ -103,16 +116,16 @@
   scroll-behavior: smooth;
   align-items: stretch;
   padding: 8px 0;
-  margin-left: calc(var(--container-pad) + 48px * -0.3); /* visual centering tweak */
-  margin-right: calc(var(--container-pad) + 48px * -0.3);
+  margin: 0;
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
-/* Hide scrollbar visually but keep accessibility */
-.trending-row::-webkit-scrollbar{ height:8px; }
-.trending-row::-webkit-scrollbar-thumb{ background: rgba(0,0,0,0.06); border-radius:99px; }
-html { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.06) transparent; }
+/* Hide scrollbar cross-browser */
+.trending-row { scrollbar-width: none; -ms-overflow-style: none; }
+.trending-row::-webkit-scrollbar { display: none; }
 
-/* Card (flex item) */
+/* Cards */
 .trend-card{
   scroll-snap-align: center;
   flex: 0 0 auto;
@@ -123,72 +136,63 @@ html { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.06) transparent; }
   overflow:hidden;
   box-shadow: var(--card-shadow);
   border: 1px solid var(--card-border);
-  transition: transform .12s ease, box-shadow .12s ease;
-  transition: opacity .45s cubic-bezier(.2,.9,.23,1), transform .45s cubic-bezier(.2,.9,.23,1);
+  transition: transform .12s ease, box-shadow .12s ease, opacity .42s ease;
+  opacity: 0;
+  transform: translateY(8px);
 }
 
+/* visible class (set by IntersectionObserver) */
+.trend-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-
-
-/* Elevated look on hover/focus */
-.trend-card:hover, .trend-card:focus-within{
+/* hover/focus */
+.trend-card:hover, .trend-card:focus-within {
   transform: translateY(-8px);
   box-shadow: 0 22px 60px rgba(6,12,24,0.12);
 }
 
-/* Link */
+/* link/thumb/meta styles */
 .trend-link { display:flex; flex-direction:column; text-decoration:none; color:inherit; height:100%; }
-
-/* Thumb */
-.trend-thumb{
-  width:100%;
-  height:160px;
-  background-size:cover;
-  background-position:center;
-  display:block;
-}
-
-/* Meta */
-.trend-meta{
-  padding:14px;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
+.trend-thumb { width:100%; height:160px; background-size:cover; background-position:center; display:block; }
+.trend-meta { padding:14px; display:flex; flex-direction:column; gap:8px; }
 .trend-cat { font-size:12px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:0.6px; }
 .trend-title { margin:0; font-size:16px; line-height:1.25; color:var(--text); font-weight:800; }
 .trend-date { font-size:12px; color:#9ca3af; }
 
-/* Slightly wider cards on medium+ screens (still horizontal) */
+/* responsive card sizes */
 @media (min-width: 860px){
   .trend-card{ min-width: 300px; max-width: 380px; }
   .trend-thumb{ height:180px; }
   .trending-row{ gap: 20px; }
 }
-
-/* Very large screens: allow even wider cards */
 @media (min-width: 1400px){
   .trend-card{ min-width: 340px; max-width: 420px; }
   .trend-thumb{ height:200px; }
   .trending-row{ gap:24px; }
 }
 
-/* Focus style for keyboard users */
-.trend-link:focus{ outline: 3px solid rgba(0,176,255,0.12); outline-offset:4px; border-radius:10px; }
+/* fade overlays visible state (applied by JS via .has-left / .has-right on .trending) */
+.trending.has-left .fade-left { opacity: 1; }
+.trending.has-right .fade-right { opacity: 1; }
 
-/* Reduced motion preference */
+/* chevron stacked behavior on small screens: right chevron only */
+@media (max-width: 650px) {
+  .trend-chev.left { display: none; }
+  .trend-chev.right { right: 12px; width:54px; height:54px; font-size:24px; }
+  .trending .fade-left { display: none; } /* hide left fade on tiny screens */
+  .trending-row { padding-right: 72px; }
+}
+
+/* accessibility */
+.trend-link:focus { outline: 3px solid rgba(0,176,255,0.12); outline-offset:3px; border-radius:8px; }
+
+/* reduced-motion */
 @media (prefers-reduced-motion: reduce){
   .trend-card, .trend-card:hover { transition: none; transform: none; }
   .trending-row { scroll-behavior: auto; }
 }
 
-/* Utility: compact variant */
+/* utility: compact */
 .trending.compact .trend-card { min-width:220px; max-width:300px; }
-
-/* Narrow-screen tweak: avoid chevrons covering content */
-@media (max-width:420px){
-  .trend-chev.left { left: 8px; }
-  .trend-chev.right { right: 8px; }
-  .trending-row { padding-left: 6px; padding-right: 6px; margin-left: 0; margin-right: 0; }
-}
-
