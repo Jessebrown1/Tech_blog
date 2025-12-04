@@ -1,75 +1,208 @@
-    .man-week .title {
-        font-size: 32px;
-        font-weight: 700;
-        color: var(--text, #0b1220);
-        margin-bottom: 6px;
-    }
+/* ManOfWeek.css — Premium, responsive, animated styles (glassmorphism + subtle motion)
+   Usage: already imported in your JSX: import './ManOfWeek.css';
+   Notes: change --accent or fonts to match your brand.
+*/
+:root{
+    --bg:#ffffff; /* neutral white */
+    --card-bg: rgba(0,0,0,0.03);
+    --glass: rgba(0,0,0,0.02);
+    --muted: inherit;
+    --accent:#000000; /* neutral */
+    --accent-2:#666666; /* neutral */
+    --glass-border: rgba(0,0,0,0.06);
+    --radius:16px;
+    --shadow: 0 8px 30px rgba(2,6,23,0.06);
+    --transition: 320ms cubic-bezier(.2,.9,.3,1);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  } 
+  
+  /* Page container */
+  .man-week.container{
+    min-height:100vh;
+    padding:56px 24px;
+    background: var(--bg);
     
-    .man-week .subtitle {
-        color: var(--muted);
-        margin-bottom: 24px;
-        font-size: 15px;
-    }
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+  }
+  
+  
+  .title{
+    font-size:2.1rem;
+    letter-spacing: -0.02em;
+    margin:0;
+    font-weight:700;
+    text-align:center;
     
-    .man-card {
-        display: flex;
-        gap: 26px;
-        background: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-        border: 1px solid rgba(0, 0, 0, 0.04);
-        padding: 20px;
-    }
+    animation: slideInUp 700ms var(--transition) both;
+  }
+  
+  
+  .subtitle{
+    margin:0;
+    color:var(--muted);
+    max-width:760px;
+    text-align:center;
+    font-size:1rem;
+    animation: fadeIn 700ms 120ms both;
+  }
+  
+  /* Card */
+  .man-card{
+    width:100%;
+    max-width:1100px;
+    display:grid;
+    grid-template-columns: 420px 1fr;
+    gap:28px;
+    align-items:stretch;
+    background: var(--card-bg);
+    border-radius: calc(var(--radius) + 4px);
+    padding:20px;
+    box-shadow: var(--shadow);
+    border:1px solid var(--glass-border);
+    backdrop-filter: blur(6px) saturate(100%);
+    animation: floatIn 900ms cubic-bezier(.16,.84,.32,1) both;
+    overflow:hidden;
+  }
+  
+  
+  /* Image pane */
+  .man-img{
+    min-height:420px;
+    border-radius:12px;
+    background-size:cover;
+    background-position:center;
+    position:relative;
+    border:1px solid rgba(255,255,255,0.04);
+    box-shadow: inset 0 2px 12px rgba(2,6,23,0.45), 0 6px 30px rgba(2,6,23,0.6);
+    transform-origin:center;
+    transition: transform var(--transition), filter var(--transition);
+  }
+  
+  .man-img::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.35) 70%);
+    border-radius:12px;
+  }
+  
+  .man-img:hover{ transform: translateY(-6px) scale(1.01); filter:brightness(1.02) saturate(1.06); }
+  
+  /* Content area */
+  .man-content{
+    padding:12px 8px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  
+  .man-content h2{
+    margin:6px 0 0 0;
+    font-size:1.5rem;
+    font-weight:700;
+  }
+  
+  .man-content h4{
+    margin:0;
+    color:var(--muted);
+    font-weight:600;
+    font-size:0.95rem;
+  }
+  
+  .bio{
     
-    .man-img {
-        width: 320px;
-        height: 320px;
-        background-size: cover;
-        background-position: center;
-        border-radius: 10px;
-        flex-shrink: 0;
-    }
-    
-    .man-content h2 {
-        margin-top: 0;
-        font-size: 26px;
-        font-weight: 700;
-    }
-    
-    .man-content h4 {
-        margin-top: 4px;
-        font-size: 16px;
-        color: var(--accent, #0ea5a2);
-        margin-bottom: 14px;
-    }
-    
-    .man-content .bio {
-        color: var(--muted);
-        line-height: 1.6;
-        margin-bottom: 20px;
-    }
-    
-    .man-content h3 {
-        margin-bottom: 8px;
-    }
-    
-    .man-content ul {
-        padding-left: 18px;
-    }
-    
-    .man-content ul li {
-        margin-bottom: 6px;
-        color: var(--text, #0b1220);
-    }
-    
-    /* Responsive */
-    @media (max-width: 900px) {
-        .man-card {
-        flex-direction: column;
-        }
-        .man-img {
-        width: 100%;
-        height: 280px;
-        }
-    }
-    
+    line-height:1.6;
+    margin:4px 0 0 0;
+    font-size:0.98rem;
+  }
+  
+  /* Achievements */
+  .man-content h3{ margin:12px 0 6px 0; font-size:1.05rem; }
+  .man-content ul{
+    margin:0; padding-left:20px; display:grid; gap:8px; list-style: none;
+  }
+  .man-content ul li{
+    position:relative;
+    padding-left:22px;
+    color:var(--muted);
+    font-size:0.95rem;
+  }
+  .man-content ul li::before{
+    content:"";
+    position:absolute; left:0; top:8px; width:10px; height:10px; border-radius:50%;
+    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+    box-shadow: 0 4px 18px rgba(0,176,255,0.18);
+  }
+  
+  /* Highlights grid */
+  .highlights{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap:12px;
+  }
+  
+  .highlight-box{
+    padding:12px;
+    border-radius:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  
+  .highlight-box h4{ margin:0 0 6px 0; font-size:0.95rem; }
+  .highlight-box p{ margin:0; color:var(--muted); font-size:0.9rem; }
+  
+  .highlight-box:hover{ transform: translateY(-6px); box-shadow: 0 10px 30px rgba(2,6,23,0.55); }
+  
+  /* Social links */
+  .social-links{ display:flex; gap:10px; margin-top:6px; }
+  .social-links a{
+    display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+    text-decoration:none; color:inherit; font-weight:600; font-size:0.92rem;
+    border:1px solid transparent; background: linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
+    transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  }
+  .social-links a:hover{ transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,176,255,0.08); border-color: rgba(0,176,255,0.12); }
+  
+  /* Small screens — stack layout */
+  @media (max-width:980px){
+    .man-card{ grid-template-columns: 1fr; max-width:920px; padding:18px; }
+    .man-img{ min-height:360px; border-radius:12px; }
+    .highlights{ grid-template-columns: 1fr; }
+  }
+  
+  @media (max-width:520px){
+    :root{ --radius:12px; }
+    .man-week.container{ padding:36px 16px; }
+    .title{ font-size:1.6rem; }
+    .man-img{ min-height:260px; }
+    .man-card{ gap:14px; }
+    .man-content{ padding:6px; }
+    .social-links a{ padding:6px 10px; font-size:0.86rem; }
+  }
+  
+  /* Subtle decorative accent line */
+  .man-card::before{
+    content:"";
+    position:absolute; pointer-events:none;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none} }
+  @keyframes slideInUp{ from{opacity:0; transform:translateY(12px)} to{opacity:1; transform:none} }
+  @keyframes floatIn{ from{opacity:0; transform: translateY(18px) scale(.995)} to{opacity:1; transform:none} }
+  
+  /* Utility small clean reset for lists */
+  .man-content ul{ margin-top:6px; }
+  
+  /* Accessibility focus states */
+  .social-links a:focus{ outline:3px solid rgba(0,176,255,0.12); outline-offset:3px; }
+  
+  /* Optional micro-interaction for the image: slow parallax on pointer move */
+  .man-img[data-pointer]{ transition:none; }
+  
+  /* End of ManOfWeek.css */
+  

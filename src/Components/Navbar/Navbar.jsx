@@ -31,8 +31,8 @@ export default function Navbar() {
           <ul className="nav-links" role="menubar" aria-label="Primary">
             <li role="none"><Link role="menuitem" to="/">Home</Link></li>
             <li role="none"><Link role="menuitem" to="/man-of-week">Tech Man of The Week</Link></li>
-            <li role="none"><Link role="menuitem" to="/tutorials">Tutorials / Articles</Link></li>
-            <li role="none"><Link role="menuitem" to="/about">About Me</Link></li>
+            <li role="none"><Link role="menuitem" to="/articlesPage"> Articles</Link></li>
+            <li role="none"><Link role="menuitem" to="/about">About Us</Link></li>
             <li role="none"><Link role="menuitem" to="/contact">Contact</Link></li>
           </ul>
 
@@ -55,8 +55,8 @@ export default function Navbar() {
           <ul className="nav-fullscreen-links" role="menu">
             <li role="none"><Link role="menuitem" onClick={() => setOpen(false)} to="/">Home</Link></li>
             <li role="none"><Link role="menuitem" onClick={() => setOpen(false)} to="/man-of-week">Tech Man of The Week</Link></li>
-            <li role="none"><Link role="menuitem" onClick={() => setOpen(false)} to="/tutorials">Tutorials / Articles</Link></li>
-            <li role="none"><Link role="menuitem" onClick={() => setOpen(false)} to="/about">About Me</Link></li>
+            <li role="none"><Link role="menuitem" onClick={() => setOpen(false)} to="/articlesPage">Articles</Link></li>
+            <li role="none"><Link role="menuitem" onClick={() => setOpen(false)} to="/about">About Us</Link></li>
             <li role="none"><Link role="menuitem" onClick={() => setOpen(false)} to="/contact">Contact</Link></li>
           </ul>
         </div>

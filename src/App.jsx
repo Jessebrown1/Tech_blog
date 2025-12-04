@@ -8,6 +8,9 @@ import Footer from './Components/Footer/Footer';
 
 import Home from './Pages/Home/Home';
 import ManOfWeek from './Pages/ManOfWeek/ManOfWeek';
+import ContactPage from './Pages/Contact/Contact'; // ✅ NEW IMPORT
+import ArticlesPage from './Pages/ArticlesPage/ArticlesPage';
+import About from "./Pages/About/About";
 
 export default function App() {
   return (
@@ -22,6 +25,14 @@ export default function App() {
 
           {/* Man of the week */}
           <Route path="/man-of-week" element={<ManOfWeek />} />
+
+          <Route path="/articlesPage" element={<ArticlesPage/>} />
+
+          <Route path="/about" element={<About />} />
+
+
+          {/* Contact Page */}
+          <Route path="/contact" element={<ContactPage />} /> {/* ✅ NEW ROUTE */}
 
           {/* Category pages */}
           <Route path="/programming" element={<Home category="Programming" />} />

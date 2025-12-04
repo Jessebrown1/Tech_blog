@@ -1,0 +1,146 @@
+/* Wrapper */
+.contact-wrapper {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  background: #ffffff;
+}
+
+/* 2-column layout */
+.contact-container {
+  width: 100%;
+  max-width: 1300px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 90vh;
+}
+
+/* LEFT SIDE IMAGE PANEL */
+.contact-image-panel {
+  background-image: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f");
+  background-size: cover;
+  background-position: center;
+  border-radius: 0;
+  position: relative;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.contact-image-panel .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.5));
+  color: white;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.overlay h1 {
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+}
+
+.overlay p {
+  font-size: 1.1rem;
+  max-width: 350px;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+/* RIGHT SIDE FORM */
+.contact-form {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: white;
+  animation: fadeIn 1s ease-out;
+}
+
+.contact-form h2 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+/* Inputs */
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.field span {
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+input,
+textarea {
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: none;
+  background: #f2f2f2;
+  outline: none;
+  transition: 280ms ease;
+}
+
+input:focus,
+textarea:focus {
+  background: #e9e9e9;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* Button */
+.send-btn {
+  padding: 14px;
+  border-radius: 14px;
+  background: #0b71ff;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: 280ms ease;
+}
+
+.send-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(11,113,255,0.25);
+}
+
+.send-btn:disabled {
+  opacity: 0.6;
+}
+
+/* Messages */
+.msg {
+  margin-top: 14px;
+  font-weight: 600;
+}
+
+.msg.success { color: #0ea769; }
+.msg.error { color: #d32f2f; }
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .contact-image-panel {
+    height: 280px;
+  }
+
+  .contact-form {
+    padding: 30px;
+  }
+}
